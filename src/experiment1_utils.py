@@ -5,6 +5,8 @@ import os
 import random
 from tqdm import tqdm
 from joblib import Parallel, delayed
+import warnings
+warnings.filterwarnings("ignore")
 
 def reset_seeds(val=42):
     # Set the seed for numpy
@@ -573,13 +575,13 @@ def process_single_noise_variance(noise_variance, noise_step_size, dimension, co
             cur_entropy = gauss_entropy(gt_noise, dimension)
             mat, det = error_cov_matrix_and_det(cur_test_data, test_data_estimate)
             cur_DEC = constant + 0.5 * np.log(det)
-            cur_upper = constant + 0.5 * np.trace(np.log(mat))
+            cur_upper = constant + 0.5 * np.sum(np.log(np.diag(mat)))
             
             success = True
             return noise, cur_entropy, cur_DEC, cur_upper
             
         except np.linalg.LinAlgError:
-            print(f"Least-squares failure at noise level {noise}. Retrying...")
+            #print(f"Least-squares failure at noise level {noise}. Retrying...")
             continue
 
 def analyze_noise_entropy(
@@ -590,7 +592,7 @@ def analyze_noise_entropy(
     noise_step_size: float = 1e-2,
     fix_random_seed: bool = True,
     n_jobs: int = -4,
-    verbose: int = 10
+    verbose: int = 0
 ):
     """
     Computes entropy estimates for a range of noise variances using parallel processing.
