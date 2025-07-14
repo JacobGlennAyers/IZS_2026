@@ -583,7 +583,12 @@ def process_single_noise_variance(noise_variance, noise_step_size, dimension, co
             # Compute entropy metrics
             constant = dimension * 0.5 * np.log(2 * np.pi * np.e)
             cur_entropy = gauss_entropy(gt_noise, dimension)
-            mat, det = error_cov_matrix_and_det(cur_test_data, data_estimate)
+            mat = None
+            det = None
+            if test_metrics:
+                mat, det = error_cov_matrix_and_det(cur_test_data, data_estimate)
+            else:
+                mat, det = error_cov_matrix_and_det(cur_train_data, data_estimate)
             cur_DEC = constant + 0.5 * np.log(det)
             # estimate upper bound
             #cur_upper = constant + 0.5 * np.sum(np.log(np.diag(mat)))
@@ -602,6 +607,7 @@ def analyze_noise_entropy(
     context_size: int = 8,
     noise_step_size: float = 1e-2,
     fix_random_seed: bool = True,
+    test_metrics: bool = True,
     n_jobs: int = -4,
     verbose: int = 0
 ):
@@ -631,7 +637,7 @@ def analyze_noise_entropy(
     results = Parallel(n_jobs=n_jobs, verbose=verbose)(
         delayed(process_single_noise_variance)(
             noise_var, noise_step_size, dimension, context_size, 
-            dataset_size, fix_random_seed
+            dataset_size, fix_random_seed, test_metrics
         ) for noise_var in noise_variances
     )
     
