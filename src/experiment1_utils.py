@@ -534,7 +534,7 @@ def analyze_noise_entropy(
 '''
 
 def process_single_noise_variance(noise_variance, noise_step_size, dimension, context_size, 
-                                 dataset_size, fix_random_seed):
+                                 dataset_size, fix_random_seed, test_metrics=True):
     """
     Process a single noise variance value.
     
@@ -566,17 +566,28 @@ def process_single_noise_variance(noise_variance, noise_step_size, dimension, co
             coefficient_matrices_estimates = estimate_coefficients(
                 X_train, Y_train, context_size
             )
-            noise_covariance_estimate_test, test_data_estimate = estimate_noise_covariance_and_data(
-                cur_test_data, coefficient_matrices_estimates, context_size
-            )
+
+            noise_covariance_estimate = None
+            data_estimate = None
+            if test_metrics:
+                # Estimate noise covariance and data estimate for testing
+                noise_covariance_estimate, data_estimate = estimate_noise_covariance_and_data(
+                    cur_test_data, coefficient_matrices_estimates, context_size
+                )
+            else:
+                # For training metrics, we can use the same data
+                noise_covariance_estimate, data_estimate = estimate_noise_covariance_and_data(
+                    cur_train_data, coefficient_matrices_estimates, context_size
+                )
             
             # Compute entropy metrics
             constant = dimension * 0.5 * np.log(2 * np.pi * np.e)
             cur_entropy = gauss_entropy(gt_noise, dimension)
-            mat, det = error_cov_matrix_and_det(cur_test_data, test_data_estimate)
+            mat, det = error_cov_matrix_and_det(cur_test_data, data_estimate)
             cur_DEC = constant + 0.5 * np.log(det)
-            cur_upper = constant + 0.5 * np.sum(np.log(np.diag(mat)))
-            
+            # estimate upper bound
+            #cur_upper = constant + 0.5 * np.sum(np.log(np.diag(mat)))
+            cur_upper = constant + 0.5 * np.sum(np.log(np.diag(gt_noise)))
             success = True
             return noise, cur_entropy, cur_DEC, cur_upper
             
