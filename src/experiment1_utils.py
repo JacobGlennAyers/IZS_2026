@@ -212,7 +212,7 @@ def estimate_noise_covariance_and_data( data, A_estimates, p):
     
     # Estimate the noise covariance matrix as the sample covariance of residuals
     residuals = np.array(residuals)
-    noise_covariance = np.cov(residuals.T, bias=False)  # Compute sample covariance
+    noise_covariance = np.cov(residuals.T, bias=True)  # Compute sample covariance
     
     return noise_covariance, data_estimate
 
@@ -591,8 +591,8 @@ def process_single_noise_variance(noise_variance, noise_step_size, dimension, co
                 mat, det = error_cov_matrix_and_det(cur_train_data, data_estimate)
             cur_DEC = constant + 0.5 * np.log(det)
             # estimate upper bound
-            #cur_upper = constant + 0.5 * np.sum(np.log(np.diag(mat)))
-            cur_upper = constant + 0.5 * np.sum(np.log(np.diag(gt_noise)))
+            cur_upper = constant + 0.5 * np.sum(np.log(np.diag(mat)))
+            #cur_upper = constant + 0.5 * np.sum(np.log(np.diag(gt_noise)))
             success = True
             return noise, cur_entropy, cur_DEC, cur_upper
             
