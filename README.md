@@ -1,7 +1,6 @@
-# IZS_2026
+# IZS_2026 Accompanying Github Repository
 Code base for publication reproducibility
 
-Overleaf Document - https://www.overleaf.com/read/vmnyytcgbwrg#af277a
 
 
 # Computer Specs
