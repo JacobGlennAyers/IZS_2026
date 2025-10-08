@@ -25,7 +25,5 @@ All experiments were run on a dual-socket server with:
 - **2 TB DDR4-3200 ECC RAM**
 - **Two Nvidia Quadro RTX 8000 GPUs (48 GB VRAM each)**
 
-Results should still be reproducible on smaller machines for reduced dataset sizes.
-
 ---
 
