@@ -6,7 +6,7 @@ from tqdm import tqdm
 import os
 import pickle
 from joblib import Parallel, delayed
-from src.alt import *  # Your existing functions
+from utils import *  # Your existing functions
 
 def reset_seeds(val=42):
     """Reset random seeds for reproducibility"""
@@ -193,7 +193,7 @@ def main():
     plt.tight_layout()
     
     # Save the plot
-    plt.savefig(os.path.join(output_dir, "dimension_sweep_plot.png"), 
+    plt.savefig(os.path.join("figures", "dimension_sweep_plot.png"), 
                 dpi=300, bbox_inches='tight')
     plt.show()
     

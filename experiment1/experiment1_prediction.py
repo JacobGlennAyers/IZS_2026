@@ -8,18 +8,18 @@ import os
 import pickle
 from joblib import Parallel, delayed
 
-from src.alt import *
+from utils import *
 
 
 
-reset_seeds()
+reset_seeds(42)
 
-data_dir = "results/synthetic_data_exp1_izs"
+data_dir = "data"
 dimension = 32
 context_size = 8
 variances = os.listdir(data_dir)
 
-solvers = ["oracle"]#,"least_squares"]#, "ridge", "lasso"]
+solvers = ["oracle","least_squares"]
 
 # Collecting the paths to all of the datasets
 dataset_paths = []
@@ -34,7 +34,7 @@ for variance in variances:
 print(f"Total datasets collected: {len(dataset_paths)}")
 
 # I know that I generate 5 million sample datapoints
-dataset_sizes = [int(1e3)]#, int(5e3), int(1e4)]#, int(5e4), int(1e5), int(5e5), int(1e6)]#, int(2.5e6), int(5e6)]
+dataset_sizes = [int(1e3), int(5e3), int(1e4), int(5e4), int(1e5), int(5e5), int(1e6)]
 #dataset_sizes = list(range(int(1e3), int(1e6)+1, int(1e3)))
 
 def process_solver_combination(dataset_path, cur_size, solver, context_size, dimension):
@@ -58,7 +58,7 @@ combinations = [
 ]
 
 # Process ALL combinations in parallel
-results = Parallel(n_jobs=40, verbose=2, backend='multiprocessing')(
+results = Parallel(n_jobs=5, verbose=2, backend='multiprocessing')(
     delayed(process_solver_combination)(dataset_path, cur_size, solver, context_size, dimension)
     for dataset_path, cur_size, solver in combinations
 )
@@ -80,7 +80,7 @@ for dataset_path, cur_size, solver, entropy_value, hadamard_upper in results:
     dataset_results[dataset_path][cur_size][solver] = entropy_value
     dataset_upper_bounds[dataset_path][cur_size][f"{solver}_upper"] = hadamard_upper  # New
 
-# Save results for each dataset - MODIFIED
+# Save results for each dataset
 for dataset_path, results_dict in dataset_results.items():
     csv_output_path = dataset_path.replace('.pkl', '.csv')
     

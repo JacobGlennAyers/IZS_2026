@@ -380,7 +380,7 @@ def create_entropy_visualization(stats_results, upper_bound_stats, dimension, sa
 # Updated main execution
 if __name__ == "__main__":
     # Configuration
-    data_dir = "results/synthetic_data_exp1_izs/"
+    data_dir = "data"
     dimension = 32
     context_size = 8
     
@@ -399,7 +399,7 @@ if __name__ == "__main__":
     #print_summary(stats_results)
     
     # Create visualization (now includes upper bounds)
-    create_entropy_visualization(stats_results, upper_bound_stats, dimension, save_path="sanity_check/exp1_vis_2.png")
+    create_entropy_visualization(stats_results, upper_bound_stats, dimension, save_path="figures/exp1_vis2.png")
     
     print(f"\nAnalysis complete!")
 
