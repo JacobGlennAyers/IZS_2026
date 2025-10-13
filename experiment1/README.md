@@ -34,5 +34,4 @@ This directory contains the code used to reproduce the results for **Experiment 
 
 ## Notes
 
-- The experiment can be run on CPU for smaller dataset sizes; however, GPU acceleration is recommended for faster processing of large trials.  
 - All output figures and computed results will be stored in their respective `results/` and `figures/` which the scripts automatically create.
