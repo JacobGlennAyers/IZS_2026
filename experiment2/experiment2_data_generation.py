@@ -191,7 +191,8 @@ if __name__ == "__main__":
     
     # Generate the audio files
     output_path = "data"
-    clips = 1200
+    clip_count = 600  # Number of clips per species
+    #clip_count = 1200
     
     os.makedirs(output_path, exist_ok=True)
     seeds = [42 + i for i in range(len(species_list))]
@@ -199,7 +200,7 @@ if __name__ == "__main__":
     print(f"\nGenerating audio for {len(species_list)} species...")
     results = Parallel(n_jobs=10, verbose=10)(
         delayed(process_species)(
-            species_params, output_path, clips, idx, seed=seeds[idx]
+            species_params, output_path, clip_count, idx, seed=seeds[idx]
         ) for idx, species_params in enumerate(species_list)
     )
     
