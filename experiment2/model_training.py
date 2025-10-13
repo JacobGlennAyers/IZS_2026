@@ -166,7 +166,7 @@ def run_batch_experiments(base_params: Dict[str, Any],
 
 # Example usage and templates
 if __name__ == "__main__":
-    # Example 1: Testing different datasets
+    os.makedirs("models", exist_ok=True)
     base_experiment_params = {
         "output_directory": "models",
         "experiment_name": None,  # Will be auto-generated
