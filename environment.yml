@@ -1,0 +1,22 @@
+name: izs
+channels:
+  - https://repo.anaconda.com/pkgs/main
+  - https://repo.anaconda.com/pkgs/r
+  - conda-forge
+dependencies:
+  - python=3.11
+  - jupyter
+  - librosa
+  - matplotlib
+  - numpy
+  - pandas
+  - scipy
+  - pytorch
+  - torchaudio
+  - torchvision
+  - tqdm
+  - datasets
+  - pydub
+  - seaborn
+  - triton
+prefix: /home/jacob/miniconda3/envs/izs
