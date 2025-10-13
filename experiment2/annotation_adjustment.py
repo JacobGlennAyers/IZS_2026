@@ -8,8 +8,9 @@ experiment2_data_path = "data"
 # Get all CSV files
 annotation_files = []
 for f in os.listdir(experiment2_data_path):
+    print(f)
     if f.endswith(".csv") and f.startswith("species_") and not f.endswith("_utterances.csv"):
-        annotation_files.append(f)
+        annotation_files.append(os.path.join(experiment2_data_path, f))
 
 # Process each annotation file
 for annotation_file in annotation_files:
@@ -33,6 +34,7 @@ for annotation_file in annotation_files:
     
     # Save original fine-grain annotations with train column
     original_filename = annotation_file.replace('.csv', '_utterances.csv')
+    df['filename'] = df['filename'].apply(lambda x: os.path.basename(x))
     df.to_csv(original_filename, index=False)
     print(f"Saved fine-grain annotations to {original_filename}")
     
@@ -67,6 +69,8 @@ for annotation_file in annotation_files:
     
     # Create clip-level dataframe
     clip_df = pd.DataFrame(clip_data)
+    clip_df['filename'] = clip_df['filename'].apply(lambda x: os.path.basename(x))
+
     
     # Save clip-level annotations
     clip_df.to_csv(annotation_file, index=False)
