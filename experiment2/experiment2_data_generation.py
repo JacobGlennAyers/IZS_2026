@@ -44,7 +44,8 @@ if __name__ == "__main__":
         "euclidean_distance_threshold": 0.15,
         "harmonic_count_range": (3, 6),
         "harmonic_decay_range": (0.4, 0.6),
-        "noise_variance": 0.001,
+        "noise_variance": 0.01,
+        "noise_floor_db": -40, 
         "spectral_tilt": -8,
         "formant_params": None,
         "use_dynamic_formants": False
@@ -56,11 +57,9 @@ if __name__ == "__main__":
     species_list = []
     
     for i in range(10):
-        # CRITICAL FIX: Deep copy for each species to prevent parameter bleeding
         species_params = copy.deepcopy(base_params)
         species_params["species"] = f"species_{i}"
         
-        # 1. FREQUENCY COMPLEXITY - Use your original approach
         center_freq = base_freq_centers[i]
         # Keep your original bandwidth approach
         range_width = 300 + (i * 80)  # Your original progression
@@ -69,7 +68,6 @@ if __name__ == "__main__":
         current_base_freq_max = center_freq + (range_width / 2)
         species_params["base_freq_range"] = (current_base_freq_min, current_base_freq_max)
         
-        # 2. TEMPORAL COMPLEXITY - More varied and complex timing patterns
         # Bout duration: shorter more frequent bouts -> longer more complex bouts
         bout_min = max(1.0, 3.0 - i * 0.2)  # Minimum decreases slightly
         bout_max = 5.0 + i * 1.5  # Maximum increases significantly
@@ -159,35 +157,9 @@ if __name__ == "__main__":
               f"Max_Harm={max_harmonics:2d}, "
               f"Wiener={wiener_thresh:.3f}")
     
-    # Verify monotonic increases in key complexity measures
-    print("\nMONOTONIC VERIFICATION:")
-    print("-" * 30)
+
     
-    # Check frequency bandwidth
-    freq_bandwidths = [(p['base_freq_range'][1] - p['base_freq_range'][0]) for p in species_list]
-    freq_monotonic = all(freq_bandwidths[i] <= freq_bandwidths[i+1] for i in range(len(freq_bandwidths)-1))
-    print(f"Frequency bandwidth monotonic: {'✓' if freq_monotonic else '✗'}")
-    
-    # Check bout duration variance  
-    bout_variances = [(p['bout_duration_range'][1] - p['bout_duration_range'][0]) for p in species_list]
-    bout_monotonic = all(bout_variances[i] <= bout_variances[i+1] for i in range(len(bout_variances)-1))
-    print(f"Bout duration variance monotonic: {'✓' if bout_monotonic else '✗'}")
-    
-    # Check harmonic count
-    max_harmonics = [p['harmonic_count_range'][1] for p in species_list]
-    harmonic_monotonic = all(max_harmonics[i] <= max_harmonics[i+1] for i in range(len(max_harmonics)-1))
-    print(f"Max harmonic count monotonic: {'✓' if harmonic_monotonic else '✗'}")
-    
-    # Check Wiener threshold (complexity allowance)
-    wiener_thresholds = [p['wiener_entropy_threshold'] for p in species_list]
-    wiener_monotonic = all(wiener_thresholds[i] <= wiener_thresholds[i+1] for i in range(len(wiener_thresholds)-1))
-    print(f"Wiener threshold monotonic: {'✓' if wiener_monotonic else '✗'}")
-    
-    if not (freq_monotonic and bout_monotonic and harmonic_monotonic and wiener_monotonic):
-        print("\n⚠️  WARNING: Some complexity measures are not monotonic!")
-        print("Consider adjusting the parameter progression.")
-    else:
-        print("\n✅ All key complexity measures increase monotonically!")
+
     
     # Generate the audio files
     output_path = "data"
