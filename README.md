@@ -17,6 +17,17 @@ by *Jacob Ayers et al., Institute of Neuroinformatics, ETH Zürich & University 
 
 
 ---
+## Python Environment
+This repository includes an **`environment.yml`** file specifying all Conda dependencies required to reproduce both experiments.
+
+To create and activate the environment:
+
+```bash
+conda env create -f environment.yml
+conda activate fang_entropy_env
+```
+
+---
 
 ## Hardware Specifications
 
