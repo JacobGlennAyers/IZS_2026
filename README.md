@@ -24,7 +24,7 @@ To create and activate the environment:
 
 ```bash
 conda env create -f environment.yml
-conda activate fang_entropy_env
+conda activate izs
 ```
 
 ---
