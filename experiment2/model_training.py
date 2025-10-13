@@ -168,7 +168,7 @@ def run_batch_experiments(base_params: Dict[str, Any],
 if __name__ == "__main__":
     # Example 1: Testing different datasets
     base_experiment_params = {
-        "output_directory": "results",
+        "output_directory": "models",
         "experiment_name": None,  # Will be auto-generated
         "device": "cuda",
         "random_seed": 42,

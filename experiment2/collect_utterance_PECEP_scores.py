@@ -9,7 +9,6 @@ import importlib.util
 import sys
 
 # Add the project directory to Python path (adjust as needed)
-sys.path.append('/home/jacob/projects/jacob')
 
 from models import get_model
 from data_setup import get_data
@@ -271,8 +270,8 @@ def process_experiment(experiment_path, dataset_dir):
 def main():
     """Main function to process all experiments."""
     # newer experiments with updated audio data generation process
-    model_dir = "/home/jacob/data/jacob/experiments/izs_exp_simpler"
-    dataset_dir = "/home/jacob/projects/jacob/izs"
+    model_dir = "models"
+    dataset_dir = "data"
     # older audio data generation process
     #model_dir = "/home/jacob/data/jacob/experiments/izs_exp_2"
     #dataset_dir = "/home/jacob/data/jacob/borg_species_sweep_izs"
