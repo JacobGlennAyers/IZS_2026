@@ -163,8 +163,8 @@ if __name__ == "__main__":
     
     # Generate the audio files
     output_path = "data"
-    clip_count = 600  # Number of clips per species
-    #clip_count = 1200
+    #clip_count = 600  # Number of clips per species
+    clip_count = 1200
     
     os.makedirs(output_path, exist_ok=True)
     seeds = [42 + i for i in range(len(species_list))]
