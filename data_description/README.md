@@ -75,8 +75,9 @@ jupyter nbconvert --execute experiment1_data_generation.ipynb
 
 Each 60-second audio clip is built through a three-step pipeline implemented in `BioInspiredAudioGenerator`. The figure below illustrates the steps for a single clip from Species 5.
 
-<!-- TODO: add generation_pipeline.png -->
-![Synthetic Vocalization Generation Pipeline](generation_pipeline.png)
+
+![Synthetic Vocalization Generation Pipeline](<img width="2945" height="2414" alt="generation_pipeline" src="https://github.com/user-attachments/assets/31b04e0f-2968-41c4-94ae-64f1d8a5099b" />
+)
 
 **Step 1 — Temporal structure (bouts, calls, sleep periods).** The generator alternates between active *bouts* and silent *sleep* periods. Within each bout, individual calls are placed at irregular intervals controlled by the species' call spacing range. The bout duration, call duration, call spacing, and sleep duration ranges all widen with species index, producing increasingly irregular temporal patterns for higher-complexity species.
 
@@ -127,7 +128,7 @@ data/
     └── ...
 ```
 
-Annotation CSV columns follow the [VocAllBase](https://github.com/VocAllBase) format: `onset`, `offset`, `duration`, `minFrequency`, `maxFrequency`, `species`, `individual`, `filename`, `channelIndex`, `train`.
+Annotation CSV columns follow the [VoCallBase]([https://github.com/VocAllBase](https://evolvinglanguage.ch/vocallbase-main/)) format: `onset`, `offset`, `duration`, `minFrequency`, `maxFrequency`, `species`, `individual`, `filename`, `channelIndex`, `train`.
 
 ### How to reproduce
 
