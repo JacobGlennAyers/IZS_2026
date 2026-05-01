@@ -10,6 +10,7 @@ by *Jacob Ayers et al., Institute of Neuroinformatics, ETH Zürich & University 
 
 ## Repository Structure
 
+- **`data_description/`** – Contains precise instructions on how to produce the synthetic data used in both experiments. It also goes a bit more into detail about the data generation for experiment 2 a bit beyond what the paper draft could fit.**.
 - **`experiment1/`** – Contains the code for *Experiment 1*, which tests the Fang bound on synthetic autoregressive data with **known conditional entropy**.  
 - **`experiment2/`** – Contains the code for *Experiment 2*, which applies the Fang bound to synthetic bio-inspired time series with **unknown entropy but known complexity ordering**.  
 - **`IZS_Fang_Extended_Proof.pdf`** – Extended derivations and theoretical details expanding on Section II of the paper.  
